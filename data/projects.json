@@ -1,0 +1,376 @@
+{
+  "projects": [
+    {
+      "id": "image-search-engine",
+      "title": "Creating An Image Search Engine Using Deep Learning",
+      "description": "In this project we build a Deep Learning based Image Search Engine that will help customers find similar products to ones they want!",
+      "image": "assets/projects/image-search.jpg",
+      "readTime": "15 minute read",
+      "tags": ["Deep Learning", "CNN", "Data Science", "Computer Vision", "Python"],
+      "sections": [
+        {
+          "id": "project-overview",
+          "title": "Project Overview",
+          "content": "<p>This project focuses on building an intelligent image search engine for e-commerce applications. The system allows customers to upload an image of a product they like, and returns visually similar products from the catalog.</p>",
+          "subsections": [
+            {
+              "id": "context",
+              "title": "Context",
+              "content": "<p>Traditional text-based search often falls short when customers can't describe what they're looking for. Visual search bridges this gap by allowing customers to simply upload an image to find similar products.</p>"
+            },
+            {
+              "id": "actions",
+              "title": "Actions",
+              "content": "<p>We implemented the following approach:</p><ul><li>Used VGG16 pre-trained on ImageNet for feature extraction</li><li>Created feature embeddings for all catalog images</li><li>Implemented cosine similarity for finding nearest neighbors</li><li>Built a Flask API for real-time search queries</li></ul>"
+            },
+            {
+              "id": "results",
+              "title": "Results",
+              "content": "<p>The system achieved <strong>92% relevance accuracy</strong> in user testing, with average query response time under 200ms for a catalog of 300 products.</p>"
+            },
+            {
+              "id": "growth",
+              "title": "Growth/Next Steps",
+              "content": "<p>Future improvements include:</p><ul><li>Fine-tuning the CNN on domain-specific data</li><li>Adding category-aware search filtering</li><li>Implementing user feedback loop for continuous improvement</li></ul>"
+            }
+          ]
+        },
+        {
+          "id": "data-overview",
+          "title": "Sample Data Overview",
+          "content": "<p>For our proof of concept we are working in only one section of the client's product base, women's shoes.</p><p>We have been provided with images of the 300 shoes that are currently available to purchase. A random selection of 18 of these can be seen in the image below.</p><p>We will need to extract & capture the \"features\" of this base image set, and compare them to the \"features\" found in any given search image. The images with the closest match will be returned to the customer!</p>"
+        },
+        {
+          "id": "algorithm-overview",
+          "title": "Convolutional Neural Network Overview",
+          "content": "<p>Convolutional Neural Networks (CNNs) are a class of deep neural networks specifically designed for image processing. They use convolutional layers to automatically learn hierarchical features from images.</p><p>The VGG16 architecture we used consists of 16 weight layers, including 13 convolutional layers and 3 fully connected layers. By removing the final classification layer, we can use the network as a powerful feature extractor.</p>"
+        },
+        {
+          "id": "project-setup",
+          "title": "Project Setup",
+          "content": "<pre><code># Clone the repository\ngit clone https://github.com/yourusername/image-search-engine.git\ncd image-search-engine\n\n# Create virtual environment\npython -m venv venv\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\n\n# Install dependencies\npip install -r requirements.txt\n\n# Extract features from catalog\npython extract_features.py\n\n# Run the search engine\npython app.py</code></pre>"
+        },
+        {
+          "id": "demo",
+          "title": "Demo",
+          "content": "<p>The search engine can be tested using our web interface. Upload any shoe image and the system will return the top 6 most similar products from the catalog.</p>"
+        },
+        {
+          "id": "conclusion",
+          "title": "Conclusion",
+          "content": "<p>This project demonstrates how deep learning can be applied to create practical e-commerce solutions. The visual search engine provides an intuitive way for customers to find products, potentially increasing engagement and sales.</p>"
+        }
+      ]
+    },
+    {
+      "id": "fruit-classification",
+      "title": "Fruit Classification Using A Convolutional Neural Network",
+      "description": "In this project we build & optimise a Convolutional Neural Network to classify images of fruits, with the goal of helping a grocery retailer enhance their self-checkout process.",
+      "image": "assets/projects/fruit-classification.jpg",
+      "readTime": "48 minute read",
+      "tags": ["Deep Learning", "CNN", "Data Science", "Computer Vision", "Python"],
+      "sections": [
+        {
+          "id": "project-overview",
+          "title": "Project Overview",
+          "content": "<p>This project develops an automated fruit classification system for grocery store self-checkout. The system identifies fruit types from camera images, eliminating the need for manual PLU code lookup.</p>",
+          "subsections": [
+            {
+              "id": "context",
+              "title": "Context",
+              "content": "<p>Self-checkout stations often require customers to manually search for fruit PLU codes, which is time-consuming and error-prone. Automated image recognition can streamline this process significantly.</p>"
+            },
+            {
+              "id": "actions",
+              "title": "Actions",
+              "content": "<p>Our approach included:</p><ul><li>Collected and augmented a dataset of 10 fruit categories</li><li>Built custom CNN architecture optimized for speed</li><li>Implemented data augmentation to improve generalization</li><li>Optimized model for edge deployment</li></ul>"
+            },
+            {
+              "id": "results",
+              "title": "Results",
+              "content": "<p>Achieved <strong>97.3% classification accuracy</strong> across 10 fruit categories with inference time under 50ms on standard hardware.</p>"
+            },
+            {
+              "id": "growth",
+              "title": "Growth/Next Steps",
+              "content": "<p>Next steps include expanding to 50+ fruit varieties and implementing quality assessment features.</p>"
+            }
+          ]
+        },
+        {
+          "id": "data-overview",
+          "title": "Sample Data Overview",
+          "content": "<p>The dataset contains 5,000 images across 10 fruit categories: apples, bananas, oranges, avocados, kiwis, lemons, mangos, grapes, strawberries, and watermelons.</p><p>Images were captured under various lighting conditions and angles to ensure robust real-world performance.</p>"
+        },
+        {
+          "id": "algorithm-overview",
+          "title": "CNN Architecture Overview",
+          "content": "<p>We designed a lightweight CNN with 5 convolutional blocks, each containing convolution, batch normalization, and max pooling layers. The architecture balances accuracy with inference speed for real-time applications.</p>"
+        },
+        {
+          "id": "project-setup",
+          "title": "Project Setup",
+          "content": "<pre><code># Clone and setup\ngit clone https://github.com/yourusername/fruit-classifier.git\npip install -r requirements.txt\n\n# Train the model\npython train.py --epochs 50 --batch-size 32\n\n# Run inference\npython predict.py --image path/to/fruit.jpg</code></pre>"
+        },
+        {
+          "id": "demo",
+          "title": "Demo",
+          "content": "<p>A live demo is available showing real-time fruit classification from webcam feed.</p>"
+        },
+        {
+          "id": "conclusion",
+          "title": "Conclusion",
+          "content": "<p>The fruit classification system provides an efficient solution for automating grocery checkout, with potential to significantly reduce customer wait times.</p>"
+        }
+      ]
+    },
+    {
+      "id": "ab-testing",
+      "title": "A/B Testing: Optimizing Website Conversion Rates",
+      "description": "In this project we apply statistical analysis to determine whether a new website design increases customer conversion rates compared to the current design.",
+      "image": "assets/projects/ab-testing.jpg",
+      "readTime": "25 minute read",
+      "tags": ["Statistics", "A/B Testing", "Data Science", "Python", "Hypothesis Testing"],
+      "sections": [
+        {
+          "id": "project-overview",
+          "title": "Project Overview",
+          "content": "<p>This project demonstrates rigorous A/B testing methodology to evaluate website design changes and their impact on conversion rates.</p>",
+          "subsections": [
+            {
+              "id": "context",
+              "title": "Context",
+              "content": "<p>The marketing team proposed a new landing page design. Before full rollout, we need statistical evidence that the new design actually improves conversions.</p>"
+            },
+            {
+              "id": "actions",
+              "title": "Actions",
+              "content": "<p>We conducted a proper A/B test including:</p><ul><li>Sample size calculation for 80% statistical power</li><li>Random user assignment to control/treatment</li><li>Chi-square test for significance</li><li>Confidence interval estimation</li></ul>"
+            },
+            {
+              "id": "results",
+              "title": "Results",
+              "content": "<p>The new design showed a <strong>15% relative improvement</strong> in conversion rate (p-value < 0.01), justifying full deployment.</p>"
+            },
+            {
+              "id": "growth",
+              "title": "Growth/Next Steps",
+              "content": "<p>Implement multi-armed bandit approach for continuous optimization.</p>"
+            }
+          ]
+        },
+        {
+          "id": "data-overview",
+          "title": "Data Overview",
+          "content": "<p>The test ran for 4 weeks with 50,000 users per group, ensuring sufficient statistical power to detect a 5% minimum detectable effect.</p>"
+        },
+        {
+          "id": "algorithm-overview",
+          "title": "Statistical Methods Overview",
+          "content": "<p>We used chi-square tests for comparing proportions, with Bonferroni correction for multiple comparisons. Bootstrap methods were employed for confidence interval estimation.</p>"
+        },
+        {
+          "id": "project-setup",
+          "title": "Project Setup",
+          "content": "<pre><code>pip install -r requirements.txt\npython ab_test_analysis.py</code></pre>"
+        },
+        {
+          "id": "demo",
+          "title": "Demo",
+          "content": "<p>Interactive Jupyter notebook available for exploring the statistical analysis.</p>"
+        },
+        {
+          "id": "conclusion",
+          "title": "Conclusion",
+          "content": "<p>Proper statistical testing is essential before making data-driven decisions. This framework can be applied to any A/B testing scenario.</p>"
+        }
+      ]
+    },
+    {
+      "id": "causal-impact",
+      "title": "Causal Impact Analysis: Measuring Marketing Effectiveness",
+      "description": "In this project we apply causal inference techniques to measure the true impact of a marketing campaign on sales, controlling for external factors.",
+      "image": "assets/projects/causal-impact.jpg",
+      "readTime": "35 minute read",
+      "tags": ["Causal Inference", "Time Series", "Data Science", "Python", "Bayesian"],
+      "sections": [
+        {
+          "id": "project-overview",
+          "title": "Project Overview",
+          "content": "<p>This project uses Google's CausalImpact methodology to estimate the true effect of marketing interventions on business outcomes.</p>",
+          "subsections": [
+            {
+              "id": "context",
+              "title": "Context",
+              "content": "<p>Traditional before/after comparisons can be misleading due to seasonality, trends, and external events. Causal inference provides more reliable estimates.</p>"
+            },
+            {
+              "id": "actions",
+              "title": "Actions",
+              "content": "<p>We implemented Bayesian structural time series models to:</p><ul><li>Create synthetic control from related markets</li><li>Estimate counterfactual scenario</li><li>Calculate incremental impact with uncertainty</li></ul>"
+            },
+            {
+              "id": "results",
+              "title": "Results",
+              "content": "<p>The campaign generated an estimated <strong>$2.3M incremental revenue</strong> (95% CI: $1.8M - $2.8M) over the 8-week period.</p>"
+            },
+            {
+              "id": "growth",
+              "title": "Growth/Next Steps",
+              "content": "<p>Extend analysis to multiple marketing channels for attribution modeling.</p>"
+            }
+          ]
+        },
+        {
+          "id": "data-overview",
+          "title": "Data Overview",
+          "content": "<p>Weekly sales data from 52 weeks pre-intervention and 8 weeks during the campaign, along with control market data for synthetic control construction.</p>"
+        },
+        {
+          "id": "algorithm-overview",
+          "title": "Methodology Overview",
+          "content": "<p>Bayesian structural time series combines state space models with spike-and-slab priors for automatic variable selection, providing robust counterfactual predictions.</p>"
+        },
+        {
+          "id": "project-setup",
+          "title": "Project Setup",
+          "content": "<pre><code>pip install pycausalimpact\npython causal_analysis.py</code></pre>"
+        },
+        {
+          "id": "demo",
+          "title": "Demo",
+          "content": "<p>Visualization dashboard showing the actual vs. predicted counterfactual with confidence bands.</p>"
+        },
+        {
+          "id": "conclusion",
+          "title": "Conclusion",
+          "content": "<p>Causal impact analysis provides a rigorous framework for measuring marketing ROI beyond simple correlation.</p>"
+        }
+      ]
+    },
+    {
+      "id": "customer-segmentation",
+      "title": "Customer Segmentation Using K-Means Clustering",
+      "description": "In this project we use unsupervised learning to segment customers based on purchasing behavior, enabling targeted marketing strategies.",
+      "image": "assets/projects/segmentation.jpg",
+      "readTime": "20 minute read",
+      "tags": ["Machine Learning", "Clustering", "Data Science", "Python", "K-Means"],
+      "sections": [
+        {
+          "id": "project-overview",
+          "title": "Project Overview",
+          "content": "<p>This project applies K-Means clustering to identify distinct customer segments from transaction data, enabling personalized marketing.</p>",
+          "subsections": [
+            {
+              "id": "context",
+              "title": "Context",
+              "content": "<p>One-size-fits-all marketing is inefficient. Understanding different customer segments allows for more effective targeting and messaging.</p>"
+            },
+            {
+              "id": "actions",
+              "title": "Actions",
+              "content": "<p>Our analysis included:</p><ul><li>RFM (Recency, Frequency, Monetary) feature engineering</li><li>Elbow method and silhouette analysis for optimal K</li><li>Cluster profiling and interpretation</li><li>Actionable segment-specific strategies</li></ul>"
+            },
+            {
+              "id": "results",
+              "title": "Results",
+              "content": "<p>Identified <strong>5 distinct customer segments</strong> with clear behavioral profiles, enabling a 23% improvement in campaign response rates.</p>"
+            },
+            {
+              "id": "growth",
+              "title": "Growth/Next Steps",
+              "content": "<p>Implement real-time segment assignment for new customers and monitor segment migration over time.</p>"
+            }
+          ]
+        },
+        {
+          "id": "data-overview",
+          "title": "Data Overview",
+          "content": "<p>Transaction history from 10,000 customers over 2 years, including purchase dates, amounts, and product categories.</p>"
+        },
+        {
+          "id": "algorithm-overview",
+          "title": "K-Means Algorithm Overview",
+          "content": "<p>K-Means partitions data into K clusters by minimizing within-cluster variance. We used standardized features and multiple random initializations for stability.</p>"
+        },
+        {
+          "id": "project-setup",
+          "title": "Project Setup",
+          "content": "<pre><code>pip install -r requirements.txt\npython segmentation_analysis.py</code></pre>"
+        },
+        {
+          "id": "demo",
+          "title": "Demo",
+          "content": "<p>Interactive visualization of customer segments with drill-down capabilities.</p>"
+        },
+        {
+          "id": "conclusion",
+          "title": "Conclusion",
+          "content": "<p>Customer segmentation provides actionable insights for marketing personalization and resource allocation.</p>"
+        }
+      ]
+    },
+    {
+      "id": "association-rules",
+      "title": "Market Basket Analysis Using Association Rules",
+      "description": "In this project we discover which products are frequently purchased together, enabling strategic product placement and cross-selling opportunities.",
+      "image": "assets/projects/market-basket.jpg",
+      "readTime": "18 minute read",
+      "tags": ["Data Mining", "Association Rules", "Data Science", "Python", "Apriori"],
+      "sections": [
+        {
+          "id": "project-overview",
+          "title": "Project Overview",
+          "content": "<p>This project uses the Apriori algorithm to discover product associations in retail transaction data.</p>",
+          "subsections": [
+            {
+              "id": "context",
+              "title": "Context",
+              "content": "<p>Understanding which products are bought together enables better store layout, promotions, and recommendation systems.</p>"
+            },
+            {
+              "id": "actions",
+              "title": "Actions",
+              "content": "<p>We performed:</p><ul><li>Transaction data preprocessing</li><li>Apriori algorithm for frequent itemset mining</li><li>Association rule generation with support/confidence thresholds</li><li>Network visualization of product relationships</li></ul>"
+            },
+            {
+              "id": "results",
+              "title": "Results",
+              "content": "<p>Discovered <strong>47 high-confidence rules</strong> with lift > 3, leading to store layout optimizations that increased basket size by 8%.</p>"
+            },
+            {
+              "id": "growth",
+              "title": "Growth/Next Steps",
+              "content": "<p>Extend to online recommendation engine and seasonal pattern analysis.</p>"
+            }
+          ]
+        },
+        {
+          "id": "data-overview",
+          "title": "Data Overview",
+          "content": "<p>Transaction data from 50,000 shopping baskets containing 200 unique products.</p>"
+        },
+        {
+          "id": "algorithm-overview",
+          "title": "Apriori Algorithm Overview",
+          "content": "<p>Apriori efficiently finds frequent itemsets by pruning candidates that contain infrequent subsets. Rules are then generated with configurable support and confidence thresholds.</p>"
+        },
+        {
+          "id": "project-setup",
+          "title": "Project Setup",
+          "content": "<pre><code>pip install mlxtend\npython basket_analysis.py</code></pre>"
+        },
+        {
+          "id": "demo",
+          "title": "Demo",
+          "content": "<p>Interactive network graph showing product relationships and association strengths.</p>"
+        },
+        {
+          "id": "conclusion",
+          "title": "Conclusion",
+          "content": "<p>Association rule mining reveals hidden patterns in transaction data that drive practical business decisions.</p>"
+        }
+      ]
+    }
+  ]
+}
