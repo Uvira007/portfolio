@@ -82,8 +82,9 @@ img {
     display: flex;
     gap: var(--space-lg);
     align-items: flex-start;
-    max-width: 950px;
+    max-width: 100%;
     margin: 0 auto;
+    padding: 0 10%;
 }
 
 .profile-section {
@@ -200,8 +201,8 @@ img {
    Projects Section - Homepage
    ============================================ */
 .projects-section {
-    padding: var(--space-md) var(--space-md) var(--space-xl);
-    max-width: 998px;
+    padding: var(--space-md) 10% var(--space-xl);
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -227,7 +228,7 @@ img {
 
 .project-image-container {
     position: relative;
-    height: 220px;
+    aspect-ratio: 16/9;
     overflow: hidden;
     background: #1a1d21;
 }
@@ -322,9 +323,9 @@ img {
 
 /* Back Navigation */
 .back-nav {
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: var(--space-md) var(--space-lg);
+    padding: var(--space-md) 10%;
 }
 
 .back-link {
@@ -350,9 +351,9 @@ img {
 
 /* Project Container */
 .project-container {
-    max-width: 900px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 0 var(--space-lg) var(--space-xl);
+    padding: 0 10% var(--space-xl);
 }
 
 /* Project Header */
@@ -363,11 +364,13 @@ img {
 
 .project-header-image {
     width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+    max-width: 800px;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
     border-radius: var(--border-radius-lg);
-    margin-bottom: var(--space-lg);
+    margin: 0 auto var(--space-lg);
     background: #1a1d21;
+    display: block;
 }
 
 .project-header .project-tags {
@@ -513,6 +516,11 @@ img {
     margin: var(--space-md) 0;
     display: block;
     max-width: 100%;
+}
+
+.project-article div[style*="flex"] img {
+    display: inline-block;
+    margin: 0;
 }
 
 .project-article strong {

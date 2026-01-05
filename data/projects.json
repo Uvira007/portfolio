@@ -1,59 +1,77 @@
 {
   "projects": [
     {
-      "id": "image-search-engine",
-      "title": "Creating An Image Search Engine Using Deep Learning",
-      "description": "In this project we build a Deep Learning based Image Search Engine that will help customers find similar products to ones they want!",
-      "image": "assets/projects/image-search.jpg",
+      "id": "single-neuron-model",
+      "title": "Single Neuron Model for Classification and Regression",
+      "description": "In this project a single neuron model is implemented that can be used for both classification and regression tasks",
+      "image": "assets\\projects\\single-neuron-model\\single-neuron-model.gif",
       "readTime": "15 minute read",
-      "tags": ["Deep Learning", "CNN", "Data Science", "Computer Vision", "Python"],
+      "tags": ["Perceptron", "Classification","Regression", "Gradient Descent", "Optimization perspective"],
       "sections": [
         {
           "id": "project-overview",
           "title": "Project Overview",
-          "content": "<p>This project focuses on building an intelligent image search engine for e-commerce applications. The system allows customers to upload an image of a product they like, and returns visually similar products from the catalog.</p>",
+          "content": "<p>This project focuses on building a single neuron model that uses gradient descent with back propogation. A linear activation function is used for Regression and a Sigmoid function is used for Classification</p>",
           "subsections": [
             {
               "id": "context",
               "title": "Context",
-              "content": "<p>Traditional text-based search often falls short when customers can't describe what they're looking for. Visual search bridges this gap by allowing customers to simply upload an image to find similar products.</p>"
+              "content": "<p>The history of Artificial Intelligence traces way back to 1943 on a paper called <a href=\"https://www.cs.cmu.edu/~./epxing/Class/10715/reading/McCulloch.and.Pitts.pdf\" target=\"_blank\">A Logical Calculus of the Ideas Immanent in Nervous Activity</a>. From a single Neuron -> Single layer network -> Multi Layer Perceptron, the development in the space of machine learning has come a long way. This project aims at developing the fundamental unit or the basic building block in artificial neural network called the neuron.</p>"
             },
             {
               "id": "actions",
               "title": "Actions",
-              "content": "<p>We implemented the following approach:</p><ul><li>Used VGG16 pre-trained on ImageNet for feature extraction</li><li>Created feature embeddings for all catalog images</li><li>Implemented cosine similarity for finding nearest neighbors</li><li>Built a Flask API for real-time search queries</li></ul>"
+              "content": "<p>The implementation of the single neuron model is as follows:</p><ul><li>A base class for single neuron model that implements the forward function and initialize weights</li><li>Single Neuron regression Model sub class that implements the activation and gradient function</li><li>A single neuron classifcation model sub class that implements the activation and gradient function</li></ul>"
             },
             {
               "id": "results",
               "title": "Results",
-              "content": "<p>The system achieved <strong>92% relevance accuracy</strong> in user testing, with average query response time under 200ms for a catalog of 300 products.</p>"
+              "content": "<p>An agnostic single neuron model that can be used for any classification and regression model. This shows the power of a single neuron which when implemented in deep layers can produce astonishing results</p>"
             },
             {
               "id": "growth",
               "title": "Growth/Next Steps",
-              "content": "<p>Future improvements include:</p><ul><li>Fine-tuning the CNN on domain-specific data</li><li>Adding category-aware search filtering</li><li>Implementing user feedback loop for continuous improvement</li></ul>"
+              "content": "<p>Although this model is for educational purposes,</p><ul><li>This model can be extended to a single layer neural network with multiple neurons</li><li>The single layer can further be extended to produce a multi layer perceptron capable of producing impressive results by creating complex decision boundaries.</li></ul>"
             }
           ]
         },
         {
           "id": "data-overview",
           "title": "Sample Data Overview",
-          "content": "<p>For our proof of concept we are working in only one section of the client's product base, women's shoes.</p><p>We have been provided with images of the 300 shoes that are currently available to purchase. A random selection of 18 of these can be seen in the image below.</p><p>We will need to extract & capture the \"features\" of this base image set, and compare them to the \"features\" found in any given search image. The images with the closest match will be returned to the customer!</p>"
+          "content": "<p>The model can be used for both classification and regression tasks.</p><ul><li>For the classification task, wine quality dataset is used</li><li>For the regression task, advertising dataset is used</li></ul>"
         },
         {
           "id": "algorithm-overview",
-          "title": "Convolutional Neural Network Overview",
-          "content": "<p>Convolutional Neural Networks (CNNs) are a class of deep neural networks specifically designed for image processing. They use convolutional layers to automatically learn hierarchical features from images.</p><p>The VGG16 architecture we used consists of 16 weight layers, including 13 convolutional layers and 3 fully connected layers. By removing the final classification layer, we can use the network as a powerful feature extractor.</p>"
-        },
+          "title": "Single Neuron Model for Classification and Regression",
+          "content": "<p>Our single neuron models consist of a single neuron or node, that sums weighted multiplications of the features of an input sample, adds a bias term, and then passes that sum through some activation function. For regression, we will use a linear activation function, i.e., just the identity function. For classification, we will use a sigmoid function.</p><p>More specifically, our single neuron model will take the dot product of an input training example $x^{(i)}$ with some learned weights $w$ and adding a learned bias $w_0$ to produce a pre-activation $z$. We then apply some activation function $f$ to $z$ to produce an activation $a$, which for this single neuron will be our output prediction $\\hat{y}$. Importantly, $x$ and $w$ can be vectors, which we will now represent as NumPy arrays in our Python code. We will use a subscript notation, e.g., $x_j$ to indicate feature $j$ within data input $x$, where $j$ goes from 1 to $m$ total features.</p><p>The following is the formal mathematical notation for our single neuron model:</p><p>$$z = x \\cdot w^T + w_0$$</p><p>$$a = f(z)$$</p><p>$$y = a$$</p><p>where $x$ and $w$ are row vectors, and the activation function $f$ operates element-wise on the vector $z.$ to produce a scalar $a.$</p>"
+},
+        {
+          "id": "rergession-gradient-descent",
+          "title": "Gradient Descent",
+          "content": "<p>Gradient descent is an iterative optimization algorithm used to find the minimum of a function. In machine learning, it is the primary method for training models by minimizing a loss function, which measures the error between predicted and actual values</p>",
+          "subsections": [
+            {
+              "id": "regression-gradient-descent",
+              "title": "Regression - Gradient Descent with Squared Error(SE) Loss",
+              "content": "<p>The activation function for the single neuron regression model will use a linear function $f(z) = z$ as the activation function. We would like to minimize a cost function, $J$, where $J$ is the total *loss* $L$ over our training data:</p><p>$$ J = \\sum_i^n L(\\hat{y}^{(i)}, y^{(i)})$$</p><p>For this simple example, we will use squared error (SE) loss where $\\epsilon^{(i)}$ is our error for any given sample $i$:</p><p>$$ L_{SE}(\\hat{y}^{(i)}, y^{(i)}) = \\frac{1}{2} (\\hat{y_i} - y_i)^2 = \\frac{1}{2} \\epsilon^2 $$</p><p>Additionally,</p><ul><li>We will perform the training loop for a specified number of iterations through our dataset, also known as epochs.</li><li>In each epoch, we will look at each input and output $(x^{(i)},y^{(i)})$ pair. For each pair, we:<ul><li>Calculate the loss $L$ between the correct value $y$ and the predicted value $\\hat{y}$</li><li>Calculate the gradient of the loss with respect to each weight, and</li><li>Update the weights based on the gradient and the learning rate, $\\eta$:</li></ul></li></ul><p>$$ w_{j,new} = w_j - \\eta \\frac{dJ}{dw_j}$$</p><p>Although we are implementing our Single Neuron Model in a class, the basic concept of gradient based learning stays the same. We are still nudging each weight along the gradient of the cost funtion with respect to that weight. However the location of where those weights is stored is different and within each instance of our class.</p><h3>Gradient descent</h3><p>In the case of our squared error loss, for any sample data point $i$ this works out to:</p><p>$$ \\frac{dJ}{dw_j} = \\frac{dL_{SE}}{dw_j}   \n  = \\frac{dL_{SE}}{d\\hat{y}} \\frac{d\\hat{y}}{dw_j} \n  = (\\hat{y} - y) \\frac{d\\hat{y}}{dw_j} $$</p><p>Importantly, we see that we need to be able to calculate the gradient of the model output $\\hat{y}$ with respect to each weight:</p><p>$$ \\frac{d\\hat{y}}{dw_j} = \\frac{df(z)}{dz} \\frac{dz}{dw_j} $$</p><p>For the linear activation function $f(z) = z$, the first term is very simple: $\\frac{df(z)}{dz} = 1$.</p><p>For the second term,</p><p>$$ z = w_0 + x_1 \\cdot w_1 + \\cdots + x_j \\cdot w_j + \\dots + x_m \\cdot w_m $$</p><p>so $\\frac{dz}{dw_j} = x_j$, except for $w_0$, where $\\frac{dz}{dw_0} = 1.$</p>"
+            },
+            {
+              "id": "classification-gradient-descent",
+              "title": "Classification - Gradient Descent with Negative Log-Likelihood (NLL) Loss",
+              "content": "<p>For the classification problem, we will change the activation function to a sigmoid. The sigmoid function squashes the pre-activation $z$ down to an activation (output) that is between 0 and 1. We also need to implement the gradient calculation, with this sigmoid activation function.</p><h3>Gradient descent</h3><p>In the case of our NLL loss, for any sample data point $i$, the gradient of $J$ with respect to weights works out to:</p><p>$$ \\frac{dJ}{dw_j} = \\frac{dL_{NLL}}{dw_j} = \\frac{dL_{NLL}}{d\\hat{y}} \\frac{d\\hat{y}}{dw_j} = \\frac{dL_{NLL}}{d\\hat{y}} \\frac{d\\hat{y}}{dz} \\frac{dz}{dw_j} = \\frac{dL_{NLL}}{d\\hat{y}} \\frac{d\\sigma{(z)}}{dz} \\frac{dz}{dw_j} $$</p><p>For the first term, the definition $L_{NLL} = y \\log{\\hat{y}} + (1-y)\\log{(1-\\hat{y})}$, giving us the following after some algebra:</p><p>$$ \\frac{dL_{NLL}}{d\\hat{y}} = \\frac{\\hat{y} - y}{\\hat{y}(1-\\hat{y})} .$$</p><p>For the second term, our derivative of the activation function $\\sigma(z)$, we get:</p><p>$$ \\frac{d\\sigma{(z)}}{dz} = \\sigma(z)(1-\\sigma(z)  = \\hat{y}(1-\\hat{y}).$$</p><p>And finally, the last term is simply $\\frac{dz}{dw_j} = x$, except for $\\frac{dz}{dw_0} = 1$.</p>"
+            }
+          ]
+          },
+
         {
           "id": "project-setup",
           "title": "Project Setup",
-          "content": "<pre><code># Clone the repository\ngit clone https://github.com/yourusername/image-search-engine.git\ncd image-search-engine\n\n# Create virtual environment\npython -m venv venv\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\n\n# Install dependencies\npip install -r requirements.txt\n\n# Extract features from catalog\npython extract_features.py\n\n# Run the search engine\npython app.py</code></pre>"
+          "content": "<pre><code># Clone the repository\ngit clone https://github.com/Uvira007/single-neuron-model\n\n# Create virtual environment\npython -m venv venv\nsource venv/bin/activate  # On Windows: venv\\Scripts\\activate\n\n# Install dependencies\npip install -r requirements.txt</code></pre><p>Run the Single_Neuron_Model.ipynb notebook from top-to-bottom. Restart the kernel and clear the outputs, if the gradients explode. </p>"
         },
         {
-          "id": "demo",
-          "title": "Demo",
-          "content": "<p>The search engine can be tested using our web interface. Upload any shoe image and the system will return the top 6 most similar products from the catalog.</p>"
+          "id": "model-results",
+          "title": "Model Results",
+          "content": "<p>The regression model had a Mean Squared Error of 0.049 and the model fit is shown below. The classification model has an accuracy of 91.47%</p><div style='display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/single-neuron-model/Regression-Result.png' alt='Regression Model Result' style='height: 320px; width: 350px; border-radius: 8px;'><img src='assets/projects/single-neuron-model/Classification-Result.png' alt='Classification Model Result' style='height: 320px; width: 350px; border-radius: 8px;'></div>"
         },
         {
           "id": "conclusion",
