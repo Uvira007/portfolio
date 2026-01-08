@@ -76,54 +76,54 @@
         {
           "id": "conclusion",
           "title": "Conclusion",
-          "content": "<p>This project demonstrates how deep learning can be applied to create practical e-commerce solutions. The visual search engine provides an intuitive way for customers to find products, potentially increasing engagement and sales.</p>"
+          "content": "<p>Now although classes are a very powerful tool, they are still not powerful enough to allow our Single Neuron Model to determine good decision boundaries for non linearly separable data. [Pytorch library](https://pytorch.org/) uses all of the afore mentioned concepts to create extremely sophisticated Neural Networks that will allow us to tackle more complex datasets.</p>"
         }
       ]
     },
     {
-      "id": "fruit-classification",
-      "title": "Fruit Classification Using A Convolutional Neural Network",
-      "description": "In this project we build & optimise a Convolutional Neural Network to classify images of fruits, with the goal of helping a grocery retailer enhance their self-checkout process.",
-      "image": "assets/projects/fruit-classification.jpg",
-      "readTime": "48 minute read",
-      "tags": ["Deep Learning", "CNN", "Data Science", "Computer Vision", "Python"],
+      "id": "ufo-analysis",
+      "title": "Identifying UFO Sightings Patterns Using Text Analysis",
+      "description": "Traditional NLP techniques and unsupervised machine learning algorithms are used in this project to analyze the trove of documents released by CIA on UFO sightings to identify hidden patterns.",
+      "image": "assets/projects/ufo-analysis/base-image.png",
+      "readTime": "12 minute read",
+      "tags": ["K-Means", "elbow method", "silhouette coefficient", "NLP", "pdfminer", "cosine similarity", "Vector Space Model", "nltk", "tf-idf"],
       "sections": [
         {
           "id": "project-overview",
           "title": "Project Overview",
-          "content": "<p>This project develops an automated fruit classification system for grocery store self-checkout. The system identifies fruit types from camera images, eliminating the need for manual PLU code lookup.</p>",
+          "content": "<p>There has been a recent uptick in the conversations surrounding the notion of \"Unidentified Flying Objects,\" or UFOs, in the media due to Congressional inquiries on the topic. The United States Government Freedom of Information Act (FOIA) allows individual citizens the right to ask for and receive previously unreleased documents possessed by the Government upon request. When these documents are released according to the law, \"Internet detectives\" pour through the documents to find that hidden nugget of information. In the case of this project, we want to see if there are any hidden patterns surrounding the origin of these so-called UFOs that the Government hasn't disclosed before. We will apply our developed system to a series of documents released by the Central Intelligence Agency (CIA) through a FOIA request to better understand the nature of the data.</p>",
           "subsections": [
             {
-              "id": "context",
-              "title": "Context",
-              "content": "<p>Self-checkout stations often require customers to manually search for fruit PLU codes, which is time-consuming and error-prone. Automated image recognition can streamline this process significantly.</p>"
+              "id": "problem-description",
+              "title": "Problem Description",
+              "content": "<p>Some of the technical challenges of this project include:</p><ul><li><b>Large Troves of Documents.</b> When released, a trove of documents is published all at once. These can include hundreds of PDFs with thousands of pages. For this particular release of documents from the CIA, there are 712 documents composed of 3493 total pages.</li><li><b>Data That is Dirty.</b> The Government releases documents that are scans of printed materials, with redactions made. This is to ensure that nothing is accidentally revealed that isn't supposed to be, so a physical step is required in Government release procedures. As such, any useful digital representation that may have existed is obliterated. The scans tend not to be sophisticated or of high-quality</li><li><b>Unusual Lexicon.</b> A standard dictionary methodology may not be appropriate for certain document types, especially this dataset. The unusual lexicon surrounding both alien and terrestrial technology will require an unsupervised approach to performing processing.</li><li><b>No Categorization or Labeling.</b> Documents are released without any labeling or categorization of any kind. This leaves it as an exercise for the recipient to pour through the mounds of information to find the needle in the haystack to find the information.</li></ul>"
             },
             {
               "id": "actions",
               "title": "Actions",
-              "content": "<p>Our approach included:</p><ul><li>Collected and augmented a dataset of 10 fruit categories</li><li>Built custom CNN architecture optimized for speed</li><li>Implemented data augmentation to improve generalization</li><li>Optimized model for edge deployment</li></ul>"
+              "content": "<p>This tool will be designed generically to accommodate any type of cache of FOIA-released documents from the Government in PDF form. Entire directories of documents will be processed within.</p><p>\nThere will be two primary user classes for the developed software. The first user class is the <i>data scientist</i> who will set up the backend for data processing, including administering the parameters for the model generation steps. The second user class is a <i>citizen data consumer</i> interested in understanding the document set, especially for finding the hidden patterns within the data. In addition, this user class will leverage the clusters that have been exposed.</p>"
             },
             {
               "id": "results",
               "title": "Results",
-              "content": "<p>Achieved <strong>97.3% classification accuracy</strong> across 10 fruit categories with inference time under 50ms on standard hardware.</p>"
+              "content": "<p>A k-value of 10 is chosen based on the elbow method and silhouette coefficient. The silhouette scores showed low confidence in the cluster assignment and it was reflected in the clusters during subsequent runs. There was variability in the cluster contents.</p><p>\n The query search implementation using Vector Space Model proved useful in finding similar documents for the given search text. One of the advantages of this application is that it is generalized to be used for documents from any domain, making it powerful to do initial analysis for NLP tasks.</p>"
             },
             {
               "id": "growth",
               "title": "Growth/Next Steps",
-              "content": "<p>Next steps include expanding to 50+ fruit varieties and implementing quality assessment features.</p>"
+              "content": "<p>The application can be accessed via <a href=\"https://foia-on-ufo-analysis.streamlit.app/\" target=\"_blank\"><u>FOIA UFO Analysis</u></a>. Currently the application runs on streamlit community cloud with limited resources. The application can be expanded to run at-scale by utilizing a paid cloud services.</p>"
             }
           ]
         },
         {
           "id": "data-overview",
           "title": "Sample Data Overview",
-          "content": "<p>The dataset contains 5,000 images across 10 fruit categories: apples, bananas, oranges, avocados, kiwis, lemons, mangos, grapes, strawberries, and watermelons.</p><p>Images were captured under various lighting conditions and angles to ensure robust real-world performance.</p>"
+          "content": "<p>A total of 712pdf documents, containing 3493 pages of text related to UFO were converted from the tiff images from the CIA. The document collection consists of a mixture of scans of printed materials with redactions, memos, transcripts and high quality report documents. A sample for low quality redacted document(left) and a high quality report document(right) is shown below</p><div style='display: flex; justify-content: center; align-items: center; gap: 7rem; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/ufo-analysis/low-quality-data-image.png' alt='low quality' style='height: 320px; width: 350px; border-radius: 8px;'><img src='assets/projects/ufo-analysis/high-quality-data-image.png' alt='High quality' style='height: 320px; width: 350px; border-radius: 8px;'></div>"
         },
         {
-          "id": "algorithm-overview",
-          "title": "CNN Architecture Overview",
-          "content": "<p>We designed a lightweight CNN with 5 convolutional blocks, each containing convolution, batch normalization, and max pooling layers. The architecture balances accuracy with inference speed for real-time applications.</p>"
+          "id": "system-architecture",
+          "title": "System Architecture Overview",
+          "content": "<p>The overall architecture will be designed around three subsystems and pipelines, the Backend Data Subsystem (in Blue), the Data Processing Pipeline (in Orange), and the Visualization Subsystem (in Green):</p><div style='display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/ufo-analysis/architecture.png' alt='Architecture' style='border-radius: 8px;'></div><p><h3>Backend Data Subsystem</h3>The backend data subsystem will be responsible for opening all of the OCR'd PDF files within the specified directory, cleaning them as appropriate, and building the interim data format for the data processing pipeline.<ul><li>Documents are parsed and imported into memory.</li><li>All words will be compared to a Wordnet, and only words with semantics will be indexed.</li><li>Only documents that ultimately have more than two actual words will be indexed.</li></ul><p>The goal of these conditioning steps is to remove the numerous incorrectly recognized words in some of the more poorly scanned documents. This will result in a more accurate representation of the hidden patterns within the documents. Finally, as a stretch goal, we will have an accessor available so that a user can choose a specific document from a cluster displayed on the rendered visualizations and see the contents of the original (source) document that was used.</p><p><h3>Data Processing Pipeline</h3>The data processing pipeline will be responsible for building all elements required for indexing, querying, and building clusters of our data.<p><ul><li>Build features of the data set by leveraging a count of the words used in the documents.</li><li>Calculate the Sum of Squared distances for a range of clusters, likely from 2 to 20.</li><li>Determine the optimal number of clusters through analysis of the \"elbow method.\"</li><li>Cluster PDFs by fitting the model to the entire data set.</li></ul></p><p>This pipeline will allow the modification of a number of parameters around this clustering technique. A few examples of these include the initial cluster space, often done via random seeding. A second is the number of clusters that the documents will be fit to. Finally, the word frequency for a given cluster as presented to the user. In addition, this data processing pipeline will create all appropriate indexes so that querying can be accomplished through the web-based frontend.</p><p><h3>Visualization Subsystem</h3>The visualization subsystem will be responsible for displaying user interfaces that will allow for both the administering of the data processing pipeline parameters and also the visualization of the results of the analysis. Modifiable parameters in the User Interface will include:<p><ul><li>Cluster Size</li><li>Clustering Initialization Method</li><li>Number of Iterations</li><li>Feature Extraction Method</li></ul></p></p></p></p>"
         },
         {
           "id": "project-setup",
