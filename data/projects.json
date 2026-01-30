@@ -148,64 +148,115 @@
       ]
     },
     {
-      "id": "ab-testing",
-      "title": "A/B Testing: Optimizing Website Conversion Rates",
-      "description": "In this project we apply statistical analysis to determine whether a new website design increases customer conversion rates compared to the current design.",
-      "image": "assets/projects/ab-testing.jpg",
+      "id": "anime-face-generator",
+      "title": "Anime Face Generator with DCGAN",
+      "description": "A Deep Convolutional Generative Adversarial Network (DCGAN) that generates unique anime character faces, with a full-stack deployment: React frontend, FastAPI backend, and hosting on Hugging Face Spaces, GitHub Pages, and Render.",
+      "image": "assets/projects/anime-face-generator/main-image.gif",
       "readTime": "25 minute read",
-      "tags": ["Statistics", "A/B Testing", "Data Science", "Python", "Hypothesis Testing"],
+      "tags": ["DCGAN", "PyTorch", "Generative AI", "FastAPI", "React", "ONNX", "Hugging Face", "GitHub Pages", "Render"],
       "sections": [
         {
           "id": "project-overview",
           "title": "Project Overview",
-          "content": "<p>This project demonstrates rigorous A/B testing methodology to evaluate website design changes and their impact on conversion rates.</p>",
+          "content": "<p>This project implements a <strong>Deep Convolutional Generative Adversarial Network (DCGAN)</strong> to generate unique anime character faces. The model is trained on the Anime Face Dataset (~63,000 images, CC0 license) and deployed as a full-stack application with multiple hosting options.</p>",
           "subsections": [
             {
-              "id": "context",
-              "title": "Context",
-              "content": "<p>The marketing team proposed a new landing page design. Before full rollout, we need statistical evidence that the new design actually improves conversions.</p>"
+              "id": "problem",
+              "title": "Problem",
+              "content": "<p>Generating coherent, diverse anime-style faces from scratch requires learning a high-dimensional distribution of facial features (eyes, hair, expressions) from data. The goal was to build an end-to-end system: train a generative model, export it for efficient inference, and serve it through a web app that hiring managers and peers can try without running code.</p>"
             },
             {
               "id": "actions",
               "title": "Actions",
-              "content": "<p>We conducted a proper A/B test including:</p><ul><li>Sample size calculation for 80% statistical power</li><li>Random user assignment to control/treatment</li><li>Chi-square test for significance</li><li>Confidence interval estimation</li></ul>"
+              "content": "<p>I implemented a DCGAN (Generator + Discriminator) in PyTorch following the <a href=\"https://arxiv.org/abs/1511.06434\" target=\"_blank\">Radford et al. (2015)</a> architecture guidelines; trained on the Kaggle Anime Face Dataset with proper preprocessing (resize, normalize); exported the generator to ONNX for fast inference; built a FastAPI backend with <code>/generate</code> and <code>/interpolate</code> endpoints; created a React frontend with Tailwind CSS and Framer Motion; and deployed the app via <strong>Hugging Face Spaces</strong> (Docker), <strong>GitHub Pages</strong> (frontend) with <strong>Render</strong> (API and model serving).</p>"
             },
             {
               "id": "results",
-              "title": "Results",
-              "content": "<p>The new design showed a <strong>15% relative improvement</strong> in conversion rate (p-value < 0.01), justifying full deployment.</p>"
-            },
-            {
-              "id": "growth",
-              "title": "Growth/Next Steps",
-              "content": "<p>Implement multi-armed bandit approach for continuous optimization.</p>"
+              "title": "Result",
+              "content": "<p>A working anime face generator that produces 64×64 RGB images from random latent vectors, supports latent-space interpolation (smooth morphing between two faces), and is accessible via a public demo. The project demonstrates full-cycle ML: data pipeline, model design, training, export, API design, and deployment.</p>"
             }
           ]
         },
         {
-          "id": "data-overview",
-          "title": "Data Overview",
-          "content": "<p>The test ran for 4 weeks with 50,000 users per group, ensuring sufficient statistical power to detect a 5% minimum detectable effect.</p>"
+          "id": "sample-data-overview",
+          "title": "Sample Data Overview",
+          "content": "<p>The model is trained on the <a href=\"https://www.kaggle.com/datasets/splcher/animefacedataset\" target=\"_blank\">Anime Face Dataset</a> from Kaggle.</p><ul><li><b>Total images:</b> ~63,000 anime character face images</li><li><b>Format:</b> JPG/PNG; original resolutions vary (typically 64×64 to 512×512)</li><li><b>License:</b> CC0 (Public Domain)</li><li><b>Preprocessing:</b> Images are resized to 64×64 and normalized to the range [-1, 1] for training</li></ul><p>The dataset is downloaded via the Kaggle API or manually from the link above and extracted into a single directory (e.g. <code>data/anime_faces/</code>) for the training script.</p>"
         },
         {
-          "id": "algorithm-overview",
-          "title": "Statistical Methods Overview",
-          "content": "<p>We used chi-square tests for comparing proportions, with Bonferroni correction for multiple comparisons. Bootstrap methods were employed for confidence interval estimation.</p>"
+          "id": "network-architecture",
+          "title": "Network Architecture",
+          "content": "<p>The DCGAN follows the architecture guidelines from Radford et al.: strided convolutions (no pooling), batch normalization in both networks (except generator output and discriminator input), no fully connected hidden layers, ReLU in the generator (except output), and LeakyReLU in the discriminator.</p>",
+          "subsections": [
+            {
+              "id": "generator",
+              "title": "Generator",
+              "content": "<p>The generator maps a 100-dimensional latent vector <code>z</code> to a 64×64 RGB image. It uses transposed convolutions to upsample from 4×4 to 64×64.</p><pre><code>Input: (batch, 100, 1, 1) - Random latent vector\n\nLayer 1: ConvTranspose2d(100, 512, 4, 1, 0) → BatchNorm → ReLU  → (batch, 512, 4, 4)\nLayer 2: ConvTranspose2d(512, 256, 4, 2, 1) → BatchNorm → ReLU  → (batch, 256, 8, 8)\nLayer 3: ConvTranspose2d(256, 128, 4, 2, 1) → BatchNorm → ReLU  → (batch, 128, 16, 16)\nLayer 4: ConvTranspose2d(128, 64, 4, 2, 1)  → BatchNorm → ReLU  → (batch, 64, 32, 32)\nLayer 5: ConvTranspose2d(64, 3, 4, 2, 1)    → Tanh              → (batch, 3, 64, 64)\n\nOutput: (batch, 3, 64, 64) - RGB image in [-1, 1]</code></pre><p>Weights are initialized with mean 0 and std 0.02 (Conv); BatchNorm with mean 1 and std 0.02.</p>"
+            },
+            {
+              "id": "discriminator",
+              "title": "Discriminator",
+              "content": "<p>The discriminator is a binary classifier: real vs. generated. It uses strided convolutions to downsample from 64×64 to a single scalar probability.</p><pre><code>Input: (batch, 3, 64, 64) - RGB image\n\nLayer 1: Conv2d(3, 64, 4, 2, 1)    → LeakyReLU(0.2)  → (batch, 64, 32, 32)\nLayer 2: Conv2d(64, 128, 4, 2, 1)  → BN → LeakyReLU  → (batch, 128, 16, 16)\nLayer 3: Conv2d(128, 256, 4, 2, 1) → BN → LeakyReLU  → (batch, 256, 8, 8)\nLayer 4: Conv2d(256, 512, 4, 2, 1) → BN → LeakyReLU  → (batch, 512, 4, 4)\nLayer 5: Conv2d(512, 1, 4, 1, 0)   → Sigmoid         → (batch, 1, 1, 1)\n\nOutput: Probability that input is real [0, 1]</code></pre>"
+            }
+          ]
+        },
+        {
+          "id": "dcgan-model-overview",
+          "title": "DCGAN Model Overview",
+          "content": "<p>A DCGAN trains two networks simultaneously: the <b>Generator (G)</b> creates fake images from random noise; the <b>Discriminator (D)</b> tries to distinguish real images from fakes. Through adversarial training, G learns to produce increasingly realistic images while D gets better at detecting fakes. Training uses binary cross-entropy loss: D is trained to maximize log D(x) + log(1 − D(G(z))), and G is trained to maximize log D(G(z)). Key hyperparameters: latent dimension <code>nz=100</code>, generator/discriminator feature maps <code>ngf=ndf=64</code>, batch size 128, learning rate 0.0002, Adam with beta1=0.5. After training, only the generator is exported to ONNX for deployment.</p>"
+        },
+        {
+          "id": "system-architecture",
+          "title": "System Architecture",
+          "content": "<p>The application is split into a frontend (UI) and a backend (API + model inference).</p>",
+          "subsections": [
+            {
+              "id": "frontend",
+              "title": "Front end",
+              "content": "<p><b>Stack:</b> React 18, Vite, Tailwind CSS, Framer Motion.</p><p>The UI lets users (1) generate a grid of anime faces (with optional seed for reproducibility) and (2) interpolate between two faces by choosing two seeds and a step count. It calls the backend REST API (<code>POST /generate</code>, <code>POST /interpolate</code>), displays returned base64 images, and supports download. The API base URL is configurable via environment variable (e.g. for GitHub Pages + Render, the frontend points to the Render API URL).</p>"
+            },
+            {
+              "id": "backend",
+              "title": "Backend",
+              "content": "<p><b>Stack:</b> FastAPI, Uvicorn, ONNX Runtime.</p><p>The backend loads the ONNX-exported generator at startup and exposes: <code>GET /</code> (API info), <code>GET /health</code> (model loaded or not), <code>POST /generate</code> (num_images, seed, format=base64|grid), <code>POST /interpolate</code> (seed1, seed2, num_steps), and <code>GET /random?seed=</code> (returns a single PNG). CORS is configured so the frontend (e.g. GitHub Pages or localhost) can call the API. The model file is provided at deployment time (e.g. from repo, GitHub Releases, or Hugging Face).</p>"
+            }
+          ]
         },
         {
           "id": "project-setup",
           "title": "Project Setup",
-          "content": "<pre><code>pip install -r requirements.txt\npython ab_test_analysis.py</code></pre>"
+          "content": "<p>Clone the repo and run the stack locally with Docker, or run frontend and API separately.</p><pre><code># Clone the repository\ngit clone https://github.com/yourusername/anime-face-generator.git\ncd anime-face-generator\n\n# Option 1: Run with Docker (recommended)\n# Place trained generator.onnx in api/models/\nmkdir -p api/models\ncp /path/to/generator.onnx api/models/\ndocker compose up -d\n# Open http://localhost:3000\n\n# Option 2: Run API and frontend separately\n# Terminal 1 - API\ncd api && pip install -r requirements.txt\nuvicorn main:app --reload --host 0.0.0.0 --port 8000\n\n# Terminal 2 - Frontend\ncd frontend && npm install && npm run dev\n# Set VITE_API_URL=http://localhost:8000 if needed</code></pre><p>Training and ONNX export are in the <code>model/</code> directory; see the Training section for dataset and training instructions.</p>"
         },
         {
-          "id": "demo",
-          "title": "Demo",
-          "content": "<p>Interactive Jupyter notebook available for exploring the statistical analysis.</p>"
+          "id": "training",
+          "title": "Training",
+          "content": "<p>Training is done with PyTorch using the scripts in <code>model/</code> (no notebooks required).</p><ul><li><b>Dataset:</b> Download via Kaggle API: <code>kaggle datasets download -d splcher/animefacedataset -p ./data --unzip</code>, or download manually and extract to <code>./data/anime_faces/</code>.</li><li><b>Command:</b> <code>cd model && python train.py --data_dir ./data/anime_faces --epochs 100</code> (optional: <code>--batch_size 128 --lr 0.0002 --device cuda</code>).</li><li><b>Outputs:</b> Checkpoints and sample images are saved under <code>checkpoints/</code> and <code>outputs/</code>. Typical training time: ~30–60 min for 100 epochs on a modern GPU.</li><li><b>Export:</b> <code>python export_onnx.py --checkpoint ./checkpoints/generator_epoch_final.pth --output ./exports/generator.onnx</code>. Copy the ONNX file to <code>api/models/generator.onnx</code> for the API.</li></ul><p>Healthy training: D(x) around 0.7–0.9, D(G(z)) around 0.3–0.5; sample images improve over epochs. If the discriminator dominates (D(G(z))→0), try lowering learning rate or using label smoothing.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/anime-face-generator/training-progression.gif' alt='Training progression' style='max-width: 480px; width: 100%; height: auto; border-radius: 8px;'></div>"
+        },
+        {
+          "id": "model-hostin g-usage",
+          "title": "Model Hosting / Usage",
+          "content": "<p>The project supports multiple deployment options so the demo can be shared without cost.</p>",
+          "subsections": [
+            {
+              "id": "hugging-face",
+              "title": "Hugging Face Spaces",
+              "content": "<p><strong>Hugging Face Spaces</strong> hosts both the app and the model in one place, with no time limits and no credit card. Create a new Space with SDK <b>Docker</b>, then add your Dockerfile, <code>app.py</code> (Gradio or custom app that loads the ONNX model and exposes an interface), <code>requirements.txt</code>, and the ONNX model (e.g. under <code>api/models/</code>). Push to the Space repo; Hugging Face builds and runs the container. The app is available at <code>https://uvira007-anime-face-generator.hf.space</code>. Ideal for ML demos and portfolios.</p>"
+            },
+            {
+              "id": "github-pages-render",
+              "title": "GitHub Pages + Render",
+              "content": "<p><strong>Frontend (GitHub Pages):</strong> The React app is built and deployed via GitHub Actions to GitHub Pages, so the UI is served at <code>https://uvira007.github.io/anime-face-generator/</code>. Configure the workflow with the correct base path and ensure the frontend uses the API URL (e.g. from a secret or env).</p><p><strong>Backend (Render):</strong> The FastAPI app is deployed as a Web Service on Render. Set the root directory to <code>api</code>, add environment variables (<code>MODEL_PATH</code>, <code>LATENT_DIM</code>, <code>CORS_ORIGINS</code>), and ensure the ONNX model is available at startup (e.g. from GitHub Releases or included in the repo). Render’s free tier may spin down after inactivity; the first request after spin-down can take 30–60 seconds. Once the API URL is set, the GitHub Pages frontend calls it for generation and interpolation.</p>"
+            }
+          ]
+        },
+        {
+          "id": "results",
+          "title": "Results",
+          "content": "<p>After training (e.g. 50–100 epochs), the generator produces diverse anime-style faces. Below are sample outputs and an example of latent-space interpolation (morphing between two faces).</p><div style='display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/anime-face-generator/generated_anime_face.png' alt='Generated anime faces' style='max-width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem;'><i>Sample generated anime faces after training.</i></p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/anime-face-generator/interpolation_sequence.png' alt='Latent interpolation' style='max-width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem;'><i>Smooth transition between two faces via latent-space interpolation.</i></p>"
         },
         {
           "id": "conclusion",
           "title": "Conclusion",
-          "content": "<p>Proper statistical testing is essential before making data-driven decisions. This framework can be applied to any A/B testing scenario.</p>"
+          "content": "<p>This project demonstrates the full pipeline of a generative ML application: dataset preparation, DCGAN design and training in PyTorch, ONNX export for inference, a FastAPI backend for model serving, and a React frontend for interaction. By documenting deployment on <strong>Hugging Face Spaces</strong> and <strong>GitHub Pages + Render</strong>, the project is accessible to hiring managers and peers without local setup. It highlights both deep learning (GANs, architecture choices, training dynamics) and engineering (APIs, Docker, and cloud deployment).</p>"
         }
       ]
     },
