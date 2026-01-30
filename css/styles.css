@@ -373,6 +373,10 @@ img {
     display: block;
 }
 
+.project-header-image--fill {
+    object-fit: cover,
+}
+
 .project-header .project-tags {
     justify-content: center;
     margin-bottom: var(--space-md);
