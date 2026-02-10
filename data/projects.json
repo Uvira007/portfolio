@@ -76,7 +76,7 @@
         {
           "id": "conclusion",
           "title": "Conclusion",
-          "content": "<p>Now although classes are a very powerful tool, they are still not powerful enough to allow our Single Neuron Model to determine good decision boundaries for non linearly separable data. [Pytorch library](https://pytorch.org/) uses all of the afore mentioned concepts to create extremely sophisticated Neural Networks that will allow us to tackle more complex datasets.</p>"
+          "content": "<p>Now although classes are a very powerful tool, they are still not powerful enough to allow our Single Neuron Model to determine good decision boundaries for non linearly separable data. The <a href=\"https://pytorch.org/\" target=\"_blank\">Pytorch library</a> uses all of the afore mentioned concepts to create extremely sophisticated Neural Networks that will allow us to tackle more complex datasets.</p>"
         }
       ]
     },
