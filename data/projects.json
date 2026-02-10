@@ -232,7 +232,7 @@
           "content": "<p>Training is done with PyTorch using the scripts in <code>model/</code> (no notebooks required).</p><ul><li><b>Dataset:</b> Download via Kaggle API: <code>kaggle datasets download -d splcher/animefacedataset -p ./data --unzip</code>, or download manually and extract to <code>./data/anime_faces/</code>.</li><li><b>Command:</b> <code>cd model && python train.py --data_dir ./data/anime_faces --epochs 100</code> (optional: <code>--batch_size 128 --lr 0.0002 --device cuda</code>).</li><li><b>Outputs:</b> Checkpoints and sample images are saved under <code>checkpoints/</code> and <code>outputs/</code>. Typical training time: ~30–60 min for 100 epochs on a modern GPU.</li><li><b>Export:</b> <code>python export_onnx.py --checkpoint ./checkpoints/generator_epoch_final.pth --output ./exports/generator.onnx</code>. Copy the ONNX file to <code>api/models/generator.onnx</code> for the API.</li></ul><p>Healthy training: D(x) around 0.7–0.9, D(G(z)) around 0.3–0.5; sample images improve over epochs. If the discriminator dominates (D(G(z))→0), try lowering learning rate or using label smoothing.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/anime-face-generator/training-progression.gif' alt='Training progression' style='max-width: 480px; width: 100%; height: auto; border-radius: 8px;'></div>"
         },
         {
-          "id": "model-hostin g-usage",
+          "id": "model-hosting-usage",
           "title": "Model Hosting / Usage",
           "content": "<p>The project supports multiple deployment options so the demo can be shared without cost.</p>",
           "subsections": [
@@ -261,64 +261,59 @@
       ]
     },
     {
-      "id": "causal-impact",
-      "title": "Causal Impact Analysis: Measuring Marketing Effectiveness",
-      "description": "In this project we apply causal inference techniques to measure the true impact of a marketing campaign on sales, controlling for external factors.",
-      "image": "assets/projects/causal-impact.jpg",
-      "readTime": "35 minute read",
-      "tags": ["Causal Inference", "Time Series", "Data Science", "Python", "Bayesian"],
+      "id": "stock-predictor",
+      "title": "Stock Predictor with Multivariate GRU",
+      "description": "End-to-end stock price predictor using a GRU built from scratch (no nn.GRU), multivariate OHLCV inputs from Yahoo Finance, and a single model for all tickers. FastAPI backend on Render, Streamlit UI on Streamlit Community Cloud, with automated retrain and model updates via GitHub Actions and GitHub API.",
+      "image": "assets/projects/stock-predictor/result.png",
+      "readTime": "24 minute read",
+      "tags": ["GRU", "PyTorch", "Time Series", "Yahoo Finance", "FastAPI", "Streamlit", "ONNX", "Render", "GitHub API", "GitHub Actions"],
       "sections": [
         {
           "id": "project-overview",
           "title": "Project Overview",
-          "content": "<p>This project uses Google's CausalImpact methodology to estimate the true effect of marketing interventions on business outcomes.</p>",
+          "content": "<p>This project implements an end-to-end <strong>stock price predictor</strong> using a <strong>GRU built from scratch</strong> (no <code>nn.GRU</code>), multivariate Open/High/Low/Close/Volume (OHLCV) inputs from <strong>Yahoo Finance</strong>, and a single model for all tickers via ticker embedding. The backend runs on <strong>Render</strong>, the Streamlit UI on <strong>Streamlit Community Cloud</strong>, and the workflow is automated through <strong>GitHub Actions</strong> and <strong>GitHub API</strong> to update model parameters when the model is fine-tuned or retrained.</p>",
           "subsections": [
             {
-              "id": "context",
-              "title": "Context",
-              "content": "<p>Traditional before/after comparisons can be misleading due to seasonality, trends, and external events. Causal inference provides more reliable estimates.</p>"
+              "id": "live-demo",
+              "title": "Try it",
+              "content": "<p><a href=\"https://gru-stock-predictor.streamlit.app/\" target=\"_blank\" rel=\"noopener\" style=\"display: inline-block; background: #1f77b4; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 0.5rem;\">▶ Try the live demo</a></p><p>Select a ticker (e.g. MSFT, AAPL), choose how many days ahead to predict (1–21), and run a prediction.</p><p><em>Note: The application may take several minutes to spin up when both the backend (Render) and frontend (Streamlit) are cold; the first request after inactivity can take 30–60 seconds or more.</em></p>"
             },
             {
               "id": "actions",
-              "title": "Actions",
-              "content": "<p>We implemented Bayesian structural time series models to:</p><ul><li>Create synthetic control from related markets</li><li>Estimate counterfactual scenario</li><li>Calculate incremental impact with uncertainty</li></ul>"
-            },
-            {
-              "id": "results",
-              "title": "Results",
-              "content": "<p>The campaign generated an estimated <strong>$2.3M incremental revenue</strong> (95% CI: $1.8M - $2.8M) over the 8-week period.</p>"
-            },
-            {
-              "id": "growth",
-              "title": "Growth/Next Steps",
-              "content": "<p>Extend analysis to multiple marketing channels for attribution modeling.</p>"
+              "title": "Features",
+              "content": "<p><ul><li><b>GRU from scratch:</b> Custom <code>GRUCell</code> and multi-layer <code>GRU</code> in <code>src/model/gru.py</code></li><li><b>Multivariate:</b> Open, High, Low, Close, Volume (normalized; log-scale volume)</li><li><b>Single model for all tickers:</b> Ticker embedding; one training run, one checkpoint</li><li><b>Next N days:</b> Predict next 1–21 days closing price (configurable)</li><li><b>Isolated backend:</b> FastAPI API; Streamlit UI calls the API</li><li><b>Retrain option:</b> Optional retrain with latest data; workflow automated via GitHub Actions and GitHub API</li><li><b>Export:</b> PyTorch (<code>.pt</code>, <code>config.json</code>, <code>normalize_stats.json</code>) and ONNX</li></ul></p>"
             }
           ]
         },
         {
           "id": "data-overview",
           "title": "Data Overview",
-          "content": "<p>Weekly sales data from 52 weeks pre-intervention and 8 weeks during the campaign, along with control market data for synthetic control construction.</p>"
+          "content": "<p>Data is fetched from <strong>Yahoo Finance</strong> using <a href=\"https://pypi.org/project/yfinance/\" target=\"_blank\">yfinance</a> (free, no API key). Default training uses ~5 years of daily OHLCV for tickers such as AAPL, MSFT, GOOGL, AMZN, META, NVDA, TSLA, JPM, V, JNJ. Features are normalized per ticker; volume is log-scaled. Sequences are built with a configurable lookback (<code>seq_len=60</code> by default) and target the next N closing prices (<code>predict_days=1–21</code>). For research and education; not for live trading.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/stock-predictor/data-sample.png' alt='Sample OHLCV data' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>Sample OHLCV time series (one ticker) used as input to the model.</i></p>"
+        },
+        {
+          "id": "network-architecture",
+          "title": "Model Architecture",
+          "content": "<p>The <strong>StockGRUModel</strong> is a hybrid architecture that combines <b>categorical</b> (ticker index via embedding) and <b>sequential</b> (OHLCV via GRU) inputs to predict future closing prices. The diagram below shows the high-level prediction flow: the <b>Ticker Index</b> and <b>OHLCV Sequence (T steps)</b> are processed in parallel—the ticker through an <b>Embedding</b> layer and the sequence through a <b>GRU module (stacked layers)</b>. The resulting <b>Embedding Vector</b> and <b>Final Hidden State</b> are concatenated and passed through a <b>Prediction Head (MLP)</b> to produce <b>Next-N-Days Predictions</b>.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/stock-predictor/prediction-flow.png' alt='Stock predictor high-level prediction flow' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>Prediction flow: Ticker Index + OHLCV Sequence → Ticker Embedding + GRU → Concatenated Vector → Prediction Head (MLP) → Next-N-days predictions.</i></p><p>The full network architecture diagram below details the model components: <b>Ticker Embedding (B, 16)</b>, two <b>GRULayers</b> (hidden_size=64) with <b>Dropout (0.2)</b> between them, a <b>GRUCell</b> view (update gate <code>z</code>, reset gate <code>r</code>, candidate <code>h̃</code>, new state <code>h'</code>), <b>Concatenate (B, 80)</b> of final hidden state and embedding, and the <b>Prediction Head (MLP)</b>: Linear (80→64), ReLU, Dropout, Linear (64→21). Training uses backpropagation to update the GRU weights (Wz, Wr, Wh) and the MLP parameters.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/stock-predictor/GRU-network-architecture.png' alt='StockGRUModel full GRU network architecture' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>Full StockGRUModel: inputs, GRU layers, GRUCell detail, concatenation, and MLP head with backpropagation.</i></p>"
         },
         {
           "id": "algorithm-overview",
-          "title": "Methodology Overview",
-          "content": "<p>Bayesian structural time series combines state space models with spike-and-slab priors for automatic variable selection, providing robust counterfactual predictions.</p>"
+          "title": "GRU from Scratch",
+          "content": "<p>The custom GRU uses a single <b>GRUCell</b>: update gate <code>z = σ(W_z @ [x, h])</code>, reset gate <code>r = σ(W_r @ [x, h])</code>, candidate <code>h̃ = tanh(W @ [x, r*h])</code>, and new state <code>h' = (1−z)*h + z*h̃</code>. Multiple <b>GRULayer</b>s are stacked (input_size → hidden_size per layer, with dropout between layers). The full model: <b>Embedding(ticker_id)</b> + <b>GRU(sequence)</b> → last hidden state concatenated with embedding → <b>FC</b> → (B, predict_days). Default: hidden_size=64, num_gru_layers=2, embedding_dim=16, seq_len=60, predict_days=21.</p>"
         },
         {
           "id": "project-setup",
           "title": "Project Setup",
-          "content": "<pre><code>pip install pycausalimpact\npython causal_analysis.py</code></pre>"
+          "content": "<p>Clone the repo and install dependencies. Train once, then run the API and Streamlit app.</p><pre><code># Clone the repository\ngit clone https://github.com/Uvira007/stock-predictor/\ncd stock-predictor\n\n# Create virtual environment\npython -m venv .venv\n.venv\\Scripts\\activate   # Windows: .venv\\Scripts\\activate\npip install -r requirements.txt\n\n# 1. Train the model (downloads ~5y OHLCV, saves to models/)\npython scripts/train_model.py\n\n# 2. Start the backend API (http://127.0.0.1:8000)\npython scripts/run_api.py\n\n# 3. In a second terminal: Streamlit UI\nstreamlit run app/streamlit_app.py</code></pre><p>API endpoints: <code>GET /tickers</code>, <code>POST /predict</code> (body: <code>{\"ticker\": \"AAPL\", \"n_days\": 5}</code>), <code>POST /retrain</code>, <code>GET /model/status</code>. Export to PyTorch and ONNX: <code>python scripts/export_model.py</code>.</p>"
         },
         {
-          "id": "demo",
-          "title": "Demo",
-          "content": "<p>Visualization dashboard showing the actual vs. predicted counterfactual with confidence bands.</p>"
+          "id": "model-results",
+          "title": "Model Results",
+          "content": "<p>Example prediction: <strong>MSFT — next 21 days</strong> from a given start date. The model outputs normalized closing prices, which are inverse-transformed using per-ticker stats for display. The chart shows the predicted close (USD) over the next 21 days.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/stock-predictor/result.png' alt='MSFT 21-day prediction' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>Sample prediction: MSFT next 21 days closing price (multivariate GRU, Yahoo Finance data).</i></p>"
         },
         {
           "id": "conclusion",
           "title": "Conclusion",
-          "content": "<p>Causal impact analysis provides a rigorous framework for measuring marketing ROI beyond simple correlation.</p>"
+          "content": "<p>This project demonstrates a full pipeline: GRU implemented from scratch, multivariate time-series data (Yahoo Finance), a single multi-ticker model with embeddings, FastAPI backend and Streamlit frontend, and deployment on <strong>Render</strong> and <strong>Streamlit Community Cloud</strong>. The workflow is automated with <strong>GitHub Actions</strong> and <strong>GitHub API</strong> to update model parameters when the model is retrained or fine-tuned. Export to PyTorch and ONNX allows reuse of the model outside the repo. For code and setup, see <a href=\"https://github.com/Uvira007/stock-predictor/\" target=\"_blank\">GitHub — Uvira007/stock-predictor</a>.</p>"
         }
       ]
     },
