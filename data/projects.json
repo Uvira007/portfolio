@@ -94,6 +94,11 @@
           "content": "<p>There has been a recent uptick in the conversations surrounding the notion of \"Unidentified Flying Objects,\" or UFOs, in the media due to Congressional inquiries on the topic. The United States Government Freedom of Information Act (FOIA) allows individual citizens the right to ask for and receive previously unreleased documents possessed by the Government upon request. When these documents are released according to the law, \"Internet detectives\" pour through the documents to find that hidden nugget of information. In the case of this project, we want to see if there are any hidden patterns surrounding the origin of these so-called UFOs that the Government hasn't disclosed before. We will apply our developed system to a series of documents released by the Central Intelligence Agency (CIA) through a FOIA request to better understand the nature of the data.</p>",
           "subsections": [
             {
+              "id": "try-it",
+              "title": "Try it",
+              "content": "<p><a href=\"https://foia-on-ufo-analysis.streamlit.app/\" target=\"_blank\" rel=\"noopener\" style=\"display: inline-block; background: #1f77b4; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 0.5rem;\">▶ Try the live demo</a></p><p>Upload your own FOIA document sets or explore the CIA UFO document collection. Use the Vector Space Model search and K-means clusters to find patterns and similar documents.</p><p><em>Note: The application runs on Streamlit Community Cloud and may take a moment to spin up after inactivity.</em></p>"
+            },
+            {
               "id": "problem-description",
               "title": "Problem Description",
               "content": "<p>Some of the technical challenges of this project include:</p><ul><li><b>Large Troves of Documents.</b> When released, a trove of documents is published all at once. These can include hundreds of PDFs with thousands of pages. For this particular release of documents from the CIA, there are 712 documents composed of 3493 total pages.</li><li><b>Data That is Dirty.</b> The Government releases documents that are scans of printed materials, with redactions made. This is to ensure that nothing is accidentally revealed that isn't supposed to be, so a physical step is required in Government release procedures. As such, any useful digital representation that may have existed is obliterated. The scans tend not to be sophisticated or of high-quality</li><li><b>Unusual Lexicon.</b> A standard dictionary methodology may not be appropriate for certain document types, especially this dataset. The unusual lexicon surrounding both alien and terrestrial technology will require an unsupervised approach to performing processing.</li><li><b>No Categorization or Labeling.</b> Documents are released without any labeling or categorization of any kind. This leaves it as an exercise for the recipient to pour through the mounds of information to find the needle in the haystack to find the information.</li></ul>"
@@ -143,7 +148,7 @@
         {
           "id": "conclusion",
           "title": "Conclusion",
-          "content": "<p>The fruit classification system provides an efficient solution for automating grocery checkout, with potential to significantly reduce customer wait times.</p>"
+          "content": "<p>This project applied traditional NLP and unsupervised learning to a real-world document release: 712 CIA FOIA documents (3,493 pages) on UFO-related material. Using <b>K-means clustering</b> with the <b>elbow method</b> and <b>silhouette coefficient</b>, we chose k=10 clusters; silhouette scores indicated moderate confidence and some variability in cluster composition across runs. The <b>Vector Space Model</b> with <b>TF-IDF</b> and <b>cosine similarity</b> proved effective for query-based search and finding semantically similar documents. The system is generalized for any FOIA-style document corpus, making it suitable for initial NLP exploration. The application is hosted on Streamlit Community Cloud for public use and can be scaled with paid cloud resources for larger deployments.</p>"
         }
       ]
     },
@@ -160,6 +165,11 @@
           "title": "Project Overview",
           "content": "<p>This project implements a <strong>Deep Convolutional Generative Adversarial Network (DCGAN)</strong> to generate unique anime character faces. The model is trained on the Anime Face Dataset (~63,000 images, CC0 license) and deployed as a full-stack application with multiple hosting options.</p>",
           "subsections": [
+            {
+              "id": "try-it",
+              "title": "Try it",
+              "content": "<p><a href=\"https://uvira007.github.io/anime-face-generator/\" target=\"_blank\" rel=\"noopener\" style=\"display: inline-block; background: #1f77b4; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 0.5rem;\">▶ Try the live demo</a></p><p>Generate anime faces and try latent-space interpolation (morph between two faces). Also available via <a href=\"https://uvira007-anime-face-generator.hf.space\" target=\"_blank\" rel=\"noopener\">Hugging Face Space</a>.</p><p><em>Note: The app may take a moment to spin up when the backend (e.g. Render) is cold after inactivity.</em></p>"
+            },
             {
               "id": "problem",
               "title": "Problem",
