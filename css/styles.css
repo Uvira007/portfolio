@@ -374,7 +374,7 @@ img {
 }
 
 .project-header-image--fill {
-    object-fit: cover,
+    object-fit: cover;
 }
 
 .project-header .project-tags {

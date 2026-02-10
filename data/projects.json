@@ -274,7 +274,7 @@
       "id": "stock-predictor",
       "title": "Stock Predictor with Multivariate GRU",
       "description": "End-to-end stock price predictor using a GRU built from scratch (no nn.GRU), multivariate OHLCV inputs from Yahoo Finance, and a single model for all tickers. FastAPI backend on Render, Streamlit UI on Streamlit Community Cloud, with automated retrain and model updates via GitHub Actions and GitHub API.",
-      "image": "assets/projects/stock-predictor/result.png",
+      "image": "assets/projects/stock-predictor/stock-prediction.jpg",
       "readTime": "24 minute read",
       "tags": ["GRU", "PyTorch", "Time Series", "Yahoo Finance", "FastAPI", "Streamlit", "ONNX", "Render", "GitHub API", "GitHub Actions"],
       "sections": [

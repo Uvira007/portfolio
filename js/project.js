@@ -57,7 +57,7 @@ function renderProjectHeader(project) {
         <img
             src="${project.image}"
             alt="${project.title}"
-            class="project-header-image${project.id === 'ufo-analysis' ? ' project-header-image--fill' : ''}"
+            class="project-header-image project-header-image--fill"
             onerror="this.src='https://via.placeholder.com/900x400/1a1d21/5fb4a2?text=${encodeURIComponent(project.title)}'"
         >
         <div class="project-tags">
