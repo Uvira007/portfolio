@@ -328,64 +328,76 @@
       ]
     },
     {
-      "id": "customer-segmentation",
-      "title": "Customer Segmentation Using K-Means Clustering",
-      "description": "In this project we use unsupervised learning to segment customers based on purchasing behavior, enabling targeted marketing strategies.",
-      "image": "assets/projects/segmentation.jpg",
+      "id": "deposit-propensity",
+      "title": "Term Deposit Subscription Prediction with Tree-Based Classifiers",
+      "description": "Enterprise-style ML pipeline for predicting bank term deposit subscriptions (UCI Bank Marketing) using Decision Tree, Random Forest, XGBoost, LightGBM, and CatBoost, with SMOTE and class weighting for imbalance and SHAP for interpretability.",
+      "image": "assets/projects/deposit-propensity/deposit-prediction.png",
       "readTime": "20 minute read",
-      "tags": ["Machine Learning", "Clustering", "Data Science", "Python", "K-Means"],
+      "tags": ["Classification", "Tree-based models", "XGBoost", "LightGBM", "CatBoost", "SHAP", "SMOTE", "Imbalanced data", "Bank Marketing", "Python"],
       "sections": [
         {
           "id": "project-overview",
           "title": "Project Overview",
-          "content": "<p>This project applies K-Means clustering to identify distinct customer segments from transaction data, enabling personalized marketing.</p>",
+          "content": "<p>This project implements an <strong>enterprise-style pipeline</strong> for predicting whether a bank client will subscribe to a <strong>term deposit</strong> (binary classification), using the <a href=\"https://archive.ics.uci.edu/ml/datasets/Bank+Marketing\" target=\"_blank\">UCI Bank Marketing</a> dataset. The pipeline trains five tree-based classifiers—<b>Decision Tree</b>, <b>Random Forest</b>, <b>XGBoost</b>, <b>LightGBM</b>, and <b>CatBoost</b>—with <b>SMOTE</b> and <b>class weighting</b> to handle class imbalance, then selects the best model by ROC-AUC and runs <b>SHAP</b> for interpretability.</p>",
           "subsections": [
             {
-              "id": "context",
-              "title": "Context",
-              "content": "<p>One-size-fits-all marketing is inefficient. Understanding different customer segments allows for more effective targeting and messaging.</p>"
+              "id": "try-it",
+              "title": "Try it",
+              "content": "<p><a href=\"https://deposit-propensity.onrender.com/\" target=\"_blank\" rel=\"noopener\" style=\"display: inline-block; background: #1f77b4; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 0.5rem;\">▶ Try the live demo</a></p><p>Explore data and model insights, compare classifiers, and view SHAP interpretability for the best model (LightGBM) on the deployed app.</p>"
             },
             {
-              "id": "actions",
-              "title": "Actions",
-              "content": "<p>Our analysis included:</p><ul><li>RFM (Recency, Frequency, Monetary) feature engineering</li><li>Elbow method and silhouette analysis for optimal K</li><li>Cluster profiling and interpretation</li><li>Actionable segment-specific strategies</li></ul>"
-            },
-            {
-              "id": "results",
-              "title": "Results",
-              "content": "<p>Identified <strong>5 distinct customer segments</strong> with clear behavioral profiles, enabling a 23% improvement in campaign response rates.</p>"
-            },
-            {
-              "id": "growth",
-              "title": "Growth/Next Steps",
-              "content": "<p>Implement real-time segment assignment for new customers and monitor segment migration over time.</p>"
+              "id": "features",
+              "title": "Features",
+              "content": "<p><ul><li><b>Data:</b> Auto-download Bank Marketing (bank-full.csv) from UCI if not present</li><li><b>Preprocessing:</b> Drop <code>duration</code>, one-hot encode categoricals, scale numerics, stratified train/test split</li><li><b>Sampling:</b> SMOTE on training set; class weights (e.g. <code>scale_pos_weight</code>) for all models</li><li><b>Models:</b> Decision Tree, Random Forest, XGBoost, LightGBM, CatBoost—evaluated on the same test set</li><li><b>Evaluation:</b> Accuracy, precision, recall, F1, ROC-AUC; best model selected by ROC-AUC</li><li><b>Interpretability:</b> SHAP (TreeExplainer) on the best model; summary and importance plots saved</li></ul></p>"
             }
           ]
         },
         {
           "id": "data-overview",
           "title": "Data Overview",
-          "content": "<p>Transaction history from 10,000 customers over 2 years, including purchase dates, amounts, and product categories.</p>"
+          "content": "<p>The <strong>Bank Marketing</strong> dataset (Moro et al., UCI) contains campaign data from a Portuguese banking institution. The target <code>y</code> is whether the client subscribed to a term deposit (yes/no). Features include job, marital status, education, default, housing and personal loan, contact type, month, campaign contacts, previous outcome, and numeric fields (age, balance, duration, etc.). The pipeline drops <code>duration</code> (often unknown before the call) and one-hot encodes categorical variables. The dataset is imbalanced (minority class = subscription), hence SMOTE and class weighting are used.</p>",
+          "subsections": [
+            {
+              "id": "numerical-feature-distributions",
+              "title": "Numerical Feature Distributions",
+              "content": "<p>Understanding the distribution of numerical features helps assess scale, skew, and potential need for transformation. The bar plot below summarizes the distribution of key numeric variables (e.g. <code>age</code>, <code>balance</code>, <code>campaign</code>, <code>pdays</code>, <code>previous</code>) in the Bank Marketing data. These distributions inform preprocessing choices such as scaling and highlight features that may drive the model.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/deposit-propensity/numerical-bar-plot.png' alt='Distribution of numerical features' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>Distribution of numerical features in the Bank Marketing dataset.</i></p>"
+            },
+            {
+              "id": "class-imbalance-and-smote",
+              "title": "Class Imbalance and SMOTE",
+              "content": "<p>The target variable (term deposit subscription) is <strong>imbalanced</strong>: the majority of contacts do not result in a subscription. The donut plot below shows the proportion of positive (yes) vs negative (no) classes in the dataset. Training on such data without adjustment often leads to models that favor the majority class and perform poorly on the minority class.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/deposit-propensity/target-donut-plot.png' alt='Target class distribution' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>Target class distribution (subscribed vs not subscribed).</i></p><p>To address this, the pipeline uses <b>SMOTE</b> (Synthetic Minority Over-sampling Technique) on the <b>training set only</b>: synthetic minority-class samples are generated in feature space so that the training data is better balanced. SMOTE is applied after the train/test split to avoid data leakage. In addition, <b>class weights</b> (e.g. <code>scale_pos_weight</code> in XGBoost/LightGBM) are used when training the models so that the loss function penalizes misclassifying the minority class more heavily. Together, SMOTE and class weighting improve recall and ROC-AUC on the positive class.</p>"
+            }
+          ]
         },
         {
-          "id": "algorithm-overview",
-          "title": "K-Means Algorithm Overview",
-          "content": "<p>K-Means partitions data into K clusters by minimizing within-cluster variance. We used standardized features and multiple random initializations for stability.</p>"
+          "id": "pipeline-methodology",
+          "title": "Pipeline and Methodology",
+          "content": "<p>The pipeline runs as follows: (1) <b>Load data</b> from <code>data/raw/</code> (downloads from UCI if missing). (2) <b>Preprocess</b>: drop configured columns, encode categoricals, scale numerics, stratified 80/20 train/test split. (3) <b>Resample</b>: SMOTE on the training set only; compute class weight for imbalanced targets. (4) <b>Train</b> all five tree-based models with optional class weights. (5) <b>Evaluate</b> on the same test set and save metrics to <code>outputs/metrics/model_comparison.json</code>; select best model by ROC-AUC. (6) <b>SHAP</b>: run TreeExplainer on the best model and save summary and feature-importance plots to <code>outputs/plots/</code>. Configuration (paths, drop columns, categorical list, SMOTE/class-weight toggles, model hyperparameters, SHAP sample size) is driven by <code>config/config.yaml</code>.</p>"
+        },
+        {
+          "id": "tree-based-classifiers",
+          "title": "Tree-Based Classifiers",
+          "content": "<p><strong>Tree-based classifiers</strong> use decision rules learned from the data: each internal node tests a feature, and each leaf assigns a class (or probability). A single <b>decision tree</b> is interpretable but prone to overfitting. <b>Ensemble methods</b> combine many trees (via bagging or boosting) to improve accuracy and robustness. The five models in this project range from a single tree to gradient-boosted ensembles.</p><p><b>Decision Tree</b>: A single tree that recursively splits the data on features (e.g. by Gini impurity or information gain) until a stopping criterion. Easy to interpret and fast to train; tends to overfit without pruning or depth limits.</p><p><b>Random Forest</b>: An ensemble of many decision trees, each trained on a bootstrap sample of the data and a random subset of features at each split. Predictions are by majority vote (classification) or average (regression). Reduces variance and overfitting compared to a single tree; still interpretable via feature importance.</p><p><b>XGBoost</b>: Gradient boosting: trees are added sequentially, each one fitting the residuals (errors) of the previous ensemble. Uses regularized objective (L1/L2) and efficient implementation. Strong performance on tabular data; supports <code>scale_pos_weight</code> for imbalanced classification.</p><p><b>LightGBM</b>: Another gradient-boosting framework that grows trees leaf-wise (best split per leaf) rather than level-wise, and uses histogram-based binning for speed. Often faster and can achieve similar or better ROC-AUC with less tuning; well suited to large datasets.</p><p><b>CatBoost</b>: Gradient boosting with native handling of categorical features (ordered target encoding) and ordered boosting to reduce overfitting. Good default behavior and strong results on mixed numeric/categorical data like Bank Marketing.</p>"
+        },
+        {
+          "id": "model-results",
+          "title": "Model Comparison Results",
+          "content": "<p>Below is the comparison across the five models on the test set (metrics from <code>model_comparison.json</code>). The pipeline selects the <b>best model by ROC-AUC</b>, which is the preferred metric for imbalanced classification because it measures ranking quality across thresholds.</p><div style='overflow-x: auto; margin: 1.5rem 0;'><table style='width: 100%; border-collapse: collapse; font-size: 0.9rem;'><thead><tr style='background: rgba(255,255,255,0.08);'><th style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: left;'>Model</th><th style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>Accuracy</th><th style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>Precision</th><th style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>Recall</th><th style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>F1</th><th style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>ROC-AUC</th></tr></thead><tbody><tr><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem;'>Decision Tree</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>81.98%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>28.94%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>37.15%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>32.53%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>62.53%</td></tr><tr style='background: rgba(255,255,255,0.03);'><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem;'>Random Forest</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>88.78%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>53.45%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>31.47%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>39.62%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>78.35%</td></tr><tr><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem;'>XGBoost</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>74.33%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>26.30%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>66.26%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>37.66%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>77.21%</td></tr><tr style='background: rgba(255,255,255,0.03);'><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem;'>LightGBM</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>68.33%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>23.24%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>74.10%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>35.38%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'><strong>78.76%</strong></td></tr><tr><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem;'>CatBoost</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>73.70%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>26.63%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>71.08%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'>38.74%</td><td style='border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 0.75rem; text-align: right;'><strong>78.76%</strong></td></tr></tbody></table></div><p><b>Which model performs best?</b> <b>LightGBM</b> and <b>CatBoost</b> tie for the highest ROC-AUC (78.76%), so they are the best overall. Between the two, LightGBM has the highest <b>recall</b> (74.10%) on the positive class (subscriptions), which is important for not missing potential subscribers; the pipeline uses LightGBM as the selected model for SHAP interpretability. <b>Random Forest</b> leads on accuracy (88.78%) and precision (53.45%) but has lower recall (31.47%), so it is better when false positives are costly. <b>XGBoost</b> and <b>CatBoost</b> also yield strong recall. The visualization below summarizes these metrics across all models.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/deposit-propensity/model-performance-metrics.png' alt='Model performance metrics comparison' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>Comparison of accuracy, precision, recall, F1, and ROC-AUC across the five tree-based classifiers.</i></p>"
+        },
+        {
+          "id": "interpretability",
+          "title": "Interpretability with SHAP",
+          "content": "<p>SHAP (SHapley Additive exPlanations) is run on the <b>best model</b> (LightGBM, by ROC-AUC) using TreeExplainer. The pipeline saves a <b>summary plot</b> (feature impact across samples) and a <b>feature importance</b> plot to <code>outputs/plots/</code>. These LightGBM SHAP visualizations help explain which drivers (e.g. contact type, previous outcome, balance) most influence the model's prediction of term deposit subscription.</p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/deposit-propensity/shap_summary_lightgbm.png' alt='LightGBM SHAP summary plot' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>LightGBM SHAP summary: impact of each feature on model output.</i></p><div style='display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;'><img src='assets/projects/deposit-propensity/shap_importance_lightgbm.png' alt='LightGBM SHAP feature importance' style='max-width: 600px; width: 100%; height: auto; border-radius: 8px;'></div><p style='margin-top: 1rem; text-align: center;'><i>LightGBM SHAP feature importance (mean |SHAP value|).</i></p>"
         },
         {
           "id": "project-setup",
           "title": "Project Setup",
-          "content": "<pre><code>pip install -r requirements.txt\npython segmentation_analysis.py</code></pre>"
-        },
-        {
-          "id": "demo",
-          "title": "Demo",
-          "content": "<p>Interactive visualization of customer segments with drill-down capabilities.</p>"
+          "content": "<p>Clone the repo and run the pipeline from the command line or via the provided Jupyter notebook.</p><pre><code># Clone the repository\ngit clone https://github.com/Uvira007/stock-propensity\ncd stock-propensity\n\n# Create virtual environment\npython -m venv .venv\n.venv\\Scripts\\activate   # Windows\n# source .venv/bin/activate   # Linux/macOS\npip install -r requirements.txt\n\n# Run the full pipeline (downloads data if needed, trains models, evaluates, runs SHAP)\npython -m src.run_pipeline</code></pre><p>Alternatively, open <code>notebooks/run_pipeline.ipynb</code> and run all cells. Outputs are written to <code>outputs/models/</code> (best model, preprocessor, feature names), <code>outputs/plots/</code> (SHAP summary and importance), and <code>outputs/metrics/</code> (model_comparison.csv, model_comparison.json). Edit <code>config/config.yaml</code> to change paths, preprocessing, SMOTE/class-weight options, model hyperparameters, or SHAP settings.</p>"
         },
         {
           "id": "conclusion",
           "title": "Conclusion",
-          "content": "<p>Customer segmentation provides actionable insights for marketing personalization and resource allocation.</p>"
+          "content": "<p>This project demonstrates a reproducible, config-driven pipeline for imbalanced binary classification: from raw UCI Bank Marketing data through preprocessing, resampling (SMOTE + class weights), multi-model training (Decision Tree, Random Forest, XGBoost, LightGBM, CatBoost), evaluation with multiple metrics, best-model selection by ROC-AUC, and SHAP-based interpretability. The design is suitable for learning and as a template for similar classification tasks. For code and configuration, see <a href=\"https://github.com/Uvira007/stock-propensity\" target=\"_blank\">GitHub — Uvira007/stock-propensity</a>.</p>"
         }
       ]
     },
